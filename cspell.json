@@ -1,0 +1,23 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    ".git",
+    ".gitignore",
+    ".vscode",
+    ".output",
+    "package.json",
+    "pnpm-lock.yaml"
+  ],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "antfu",
+    "Attributify",
+    "nuxt",
+    "nuxtjs",
+    "unocss",
+    "vueuse"
+  ],
+  "ignoreWords": [],
+  "import": []
+}
