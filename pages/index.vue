@@ -1,11 +1,11 @@
 <script setup>
-const route = useRoute()
 </script>
 
 <template>
-  <div>
-    <h1>Nuxt Routing set up successfully!</h1>
-    <p>Current route: {{ route.path }}</p>
-    <a href="https://nuxt.com/docs/getting-started/routing" target="_blank">Learn more about Nuxt Routing</a>
+  <div bg-neutral-100 h-full w-full flex justify-center>
+    <!-- 备案预留区域 -->
+    <!-- 主体框架 -->
+    <Layout />
+    <!-- 回到顶部按钮预留区域 -->
   </div>
 </template>
