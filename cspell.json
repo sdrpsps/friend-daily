@@ -6,13 +6,15 @@
     ".vscode",
     ".output",
     "package.json",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "docker-compose.yml"
   ],
   "dictionaryDefinitions": [],
   "dictionaries": [],
   "words": [
     "antfu",
     "Attributify",
+    "datasource",
     "nuxt",
     "nuxtjs",
     "solgan",

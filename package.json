@@ -13,6 +13,10 @@
     "lint:fix": "eslint . --fix",
     "spell": "cspell ."
   },
+  "dependencies": {
+    "@prisma/client": "^5.7.0",
+    "prisma": "^5.7.0"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.3.4",
     "@commitlint/cli": "^18.4.3",
@@ -39,9 +43,12 @@
     "commit-msg": "npx commitlint --edit ${1}"
   },
   "lint-staged": {
-    "*": [
+    "*.{js,ts,vue}": [
       "eslint --fix",
       "cspell ."
     ]
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }
