@@ -13,4 +13,10 @@ export default defineConfig({
   transformers: [
     transformerDirectives(),
   ],
+  theme: {
+    colors: {
+      primary: '#576b95',
+      bg: '#f7f7f7',
+    },
+  },
 })

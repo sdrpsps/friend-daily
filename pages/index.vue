@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div bg-neutral-100 h-full w-full flex justify-center>
+  <div class="bg-neutral-100 min-h-screen">
     <!-- 备案预留区域 -->
     <!-- 主体框架 -->
     <Layout />
