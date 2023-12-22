@@ -4,24 +4,41 @@ const prisma = new PrismaClient()
 
 const userData = [
   {
-    name: 'Alice',
-    email: 'alice@prisma.io',
+    name: 'Sunny',
+    email: 'sunny@bytespark.app',
     posts: [
       {
         title: 'Join the Prisma Slack',
         content: 'https://slack.prisma.io',
+        type: 'image',
+        media: [
+          { type: 'image', url: 'https://picsum.photos/200/200' },
+        ],
+        likes: [],
+        comments: [],
       },
       {
         title: 'Ask a question about Prisma on GitHub',
         content: 'https://www.github.com/prisma/prisma/discussions',
+        type: 'image',
+        media: [
+          { type: 'image', url: 'https://picsum.photos/200/200' },
+          { type: 'image', url: 'https://picsum.photos/300/200' },
+        ],
+        likes: [],
+        comments: [],
       },
       {
         title: 'Prisma on YouTube',
         content: 'https://pris.ly/youtube',
-      },
-      {
-        title: 'Follow Prisma on Twitter',
-        content: 'https://www.twitter.com/prisma',
+        type: 'image',
+        media: [
+          { type: 'image', url: 'https://picsum.photos/200/200' },
+          { type: 'image', url: 'https://picsum.photos/300/200' },
+          { type: 'image', url: 'https://picsum.photos/250/200' },
+        ],
+        likes: [],
+        comments: [],
       },
     ],
   },
@@ -30,7 +47,10 @@ const userData = [
 async function main() {
   console.log(`Clean collection ...`)
   await prisma.user.deleteMany()
+  await prisma.media.deleteMany()
   await prisma.post.deleteMany()
+  await prisma.like.deleteMany()
+  await prisma.comment.deleteMany()
 
   console.log(`Start seeding ...`)
   for (const u of userData) {
@@ -43,14 +63,35 @@ async function main() {
     console.log(`Created user with id: ${user.id}`)
 
     for (const p of u.posts) {
+      const { media, likes, comments, ...postWithoutMediaLikesComments } = p
       const post = await prisma.post.create({
         data: {
-          title: p.title,
-          content: p.content,
+          ...postWithoutMediaLikesComments,
           authorId: user.id,
         },
       })
       console.log(`Created post with id: ${post.id} for user with id: ${user.id}`)
+
+      for (const m of media) {
+        const media = await prisma.media.create({
+          data: { ...m, postId: post.id },
+        })
+        console.log(`Created media with id: ${media.id} for post with id: ${post.id}`)
+      }
+
+      for (const l of likes) {
+        const like = await prisma.like.create({
+          data: { ...l, postId: post.id },
+        })
+        console.log(`Created like with id: ${like.id} for post with id: ${post.id}`)
+      }
+
+      for (const c of comments) {
+        const comment = await prisma.comment.create({
+          data: { ...c, postId: post.id },
+        })
+        console.log(`Created comment with id: ${comment.id} for post with id: ${post.id}`)
+      }
     }
   }
   console.log(`Seeding finished.`)
