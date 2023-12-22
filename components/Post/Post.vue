@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Grid1 from '~/components/Image/Grid1.vue'
-
 const avatar = computed(() => 'https://static.bytespark.app/file/ed02ef201195aef1be23e.png')
 </script>
 
@@ -15,14 +13,12 @@ const avatar = computed(() => 'https://static.bytespark.app/file/ed02ef201195aef
         人若要云淡风轻，就需要极高的修养；房子要装得质朴无华，则需要昂贵的代价，非常人能奢想。凡事多如此，简单的往往最贵，除非是真简单。
       </p>
       <div class="pt-1 pb-4">
-        <Grid1 />
+        <ImageGrid1 />
+        <ImageGrid2 />
+        <ImageGrid3 />
       </div>
       <!-- 底部 -->
       <PostFooter />
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

@@ -22,7 +22,3 @@
   </div>
   <div class="border-b border-bg pt-4" />
 </template>
-
-<style scoped>
-
-</style>

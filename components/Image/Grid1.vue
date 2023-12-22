@@ -3,7 +3,7 @@ const contentImage = computed(() => 'https://static.bytespark.app/file/399c701be
 </script>
 
 <template>
-  <div class="grid grid-cols-1 max-w-[300px]">
-    <img class="object-cover object-center rounded cursor-zoom-in" :src="contentImage" alt="content-image">
+  <div class="grid grid-cols-1 w-2/3">
+    <img class="object-cover object-center aspect-square rounded cursor-zoom-in" :src="contentImage" alt="content-image">
   </div>
 </template>
