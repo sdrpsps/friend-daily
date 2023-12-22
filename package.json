@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "preinstall": "npx only-allow pnpm",
@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
-    "prisma": "^5.7.0"
+    "v-viewer": "^3.0.11",
+    "viewerjs": "^1.11.6"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.3.4",
@@ -34,6 +35,7 @@
     "eslint": "^8.55.0",
     "lint-staged": "^15.2.0",
     "nuxt": "^3.8.2",
+    "prisma": "^5.7.0",
     "simple-git-hooks": "^2.9.0",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5"
