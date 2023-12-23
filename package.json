@@ -11,7 +11,8 @@
     "postinstall": "nuxt prepare && npx simple-git-hooks",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "spell": "cspell ."
+    "spell": "cspell .",
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",

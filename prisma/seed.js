@@ -9,7 +9,6 @@ const userData = [
     posts: [
       {
         title: 'Join the Prisma Slack',
-        content: 'https://slack.prisma.io',
         type: 'image',
         media: [
           { type: 'image', url: 'https://picsum.photos/200/200' },
@@ -19,7 +18,6 @@ const userData = [
       },
       {
         title: 'Ask a question about Prisma on GitHub',
-        content: 'https://www.github.com/prisma/prisma/discussions',
         type: 'image',
         media: [
           { type: 'image', url: 'https://picsum.photos/200/200' },
@@ -30,7 +28,6 @@ const userData = [
       },
       {
         title: 'Prisma on YouTube',
-        content: 'https://pris.ly/youtube',
         type: 'image',
         media: [
           { type: 'image', url: 'https://picsum.photos/200/200' },
@@ -46,11 +43,7 @@ const userData = [
 
 async function main() {
   console.log(`Clean collection ...`)
-  await prisma.user.deleteMany()
-  await prisma.media.deleteMany()
-  await prisma.post.deleteMany()
-  await prisma.like.deleteMany()
-  await prisma.comment.deleteMany()
+  await clearData()
 
   console.log(`Start seeding ...`)
   for (const u of userData) {
@@ -67,7 +60,7 @@ async function main() {
       const post = await prisma.post.create({
         data: {
           ...postWithoutMediaLikesComments,
-          authorId: user.id,
+          userId: user.id,
         },
       })
       console.log(`Created post with id: ${post.id} for user with id: ${user.id}`)
@@ -95,6 +88,15 @@ async function main() {
     }
   }
   console.log(`Seeding finished.`)
+}
+
+async function clearData() {
+  // 删除所有现有数据
+  await prisma.comment.deleteMany({});
+  await prisma.like.deleteMany({});
+  await prisma.media.deleteMany({});
+  await prisma.post.deleteMany({});
+  await prisma.user.deleteMany({});
 }
 
 main()

@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { useTimeAgo } from '@vueuse/core'
+import type { PostItem } from '~/server/api/post/types'
 
+const { post } = defineProps<{ post: PostItem }>()
+const createTime = computed(() => useTimeAgo(post.createdAt).value.replace(/^["|'](.*)["|']$/g, '$1'))
 </script>
 
 <template>
   <div class="flex justify-between items-center pb-4">
     <!-- 时间 -->
     <div class="text-neutral-300 text-xs select-none">
-      4天前
+      {{ createTime }}
     </div>
     <!-- 点赞 -->
     <div class="bg-bg text-primary px-1 rounded cursor-pointer">
