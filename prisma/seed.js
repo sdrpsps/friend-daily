@@ -14,7 +14,44 @@ const userData = [
           { type: 'image', url: 'https://picsum.photos/200/200' },
         ],
         likes: [{ name: '访客0' }, { name: '访客1' }, { name: '访客2' }],
-        comments: [],
+        comments: [
+          {
+            name: 'Peter',
+            email: 'j8qFm@example.com',
+            content: 'Hi',
+            website: 'https://google.com',
+            replies:
+                [
+                  {
+                    name: 'Sunny',
+                    email: 'fXvK9@example.com',
+                    content: '你好啊',
+                    website: 'https://bing.com',
+                  },
+                ],
+          },
+          {
+            name: '只因你太美',
+            email: 'j8qFm@example.com',
+            content: '你干嘛😊',
+            website: 'https://google.com',
+            replies:
+                [
+                  {
+                    name: '蔡徐坤',
+                    email: 'fXvK9@example.com',
+                    content: '小黑子，律师函警告⚠️',
+                    website: 'https://google.com',
+                  },
+                ],
+          },
+          {
+            name: 'Sunny',
+            email: 'fXvK9@example.com',
+            content: '怎么哪里都有咯咯的粉丝😭',
+            website: 'https://bing.com',
+          },
+        ],
       },
       {
         title: 'Ask a question about Prisma on GitHub',
@@ -80,10 +117,18 @@ async function main() {
       }
 
       for (const c of comments) {
+        const { replies, ...commentWithoutReplies } = c
         const comment = await prisma.comment.create({
-          data: { ...c, postId: post.id },
+          data: { ...commentWithoutReplies, postId: post.id },
         })
         console.log(`Created comment with id: ${comment.id} for post with id: ${post.id}`)
+
+        for (const r of replies || []) {
+          const reply = await prisma.comment.create({
+            data: { ...r, postId: post.id, replyToId: comment.id },
+          })
+          console.log(`Created reply with id: ${reply.id} for comment with id: ${comment.id}`)
+        }
       }
     }
   }

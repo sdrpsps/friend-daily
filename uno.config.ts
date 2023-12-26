@@ -17,6 +17,7 @@ export default defineConfig({
     colors: {
       primary: '#576b95',
       bg: '#f7f7f7',
+      divider: '#f2f2f2',
     },
   },
 })

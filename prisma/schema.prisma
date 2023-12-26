@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  email String @unique
-  posts Post[]
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String    @unique
+  posts    Post[]
+  comments Comment[]
 }
 
 model Post {
@@ -52,8 +53,10 @@ model Comment {
   email     String
   content   String
   website   String?
+  replyToId String?  @db.ObjectId
+  replyTo   User?    @relation(fields: [replyToId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Post      Post?    @relation(fields: [postId], references: [id])
-  postId    String?  @db.ObjectId
+  Post      Post    @relation(fields: [postId], references: [id])
+  postId    String  @db.ObjectId
 }
