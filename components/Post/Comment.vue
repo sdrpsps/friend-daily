@@ -11,12 +11,12 @@ function getReplyUser(id: string) {
 </script>
 
 <template>
-  <div v-if="postItem.comments.length > 0" class="bg-bg w-full text-primary flex flex-col px-3 py-2 border-t border-divider">
+  <div v-if="postItem.comments.length > 0" class="w-full flex flex-col border-t border-divider bg-bg px-3 py-2 text-primary">
     <div v-for="comment in postItem.comments" :key="comment.id" class="py-0.5">
       <!-- 被回复评论 -->
       <template v-if="comment.replyToId">
         <UserName :name="comment.name" :website="comment.website" />
-        <span class="text-gray-800 px-0.5">回复</span>
+        <span class="px-0.5 text-gray-800">回复</span>
         <UserName :name="getReplyUser(comment.replyToId!).name" :website="getReplyUser(comment.replyToId!).website" />
         <span class="pr-1">:</span>
         <span class="comment-content hover:cursor-alias">{{ comment.content }}</span>

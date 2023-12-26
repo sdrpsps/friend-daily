@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="h-full w-full md:w-xl mx-auto bg-white">
+  <div class="mx-auto h-full w-full bg-white md:w-xl">
     <LayoutHeader />
     <PostLayout />
   </div>

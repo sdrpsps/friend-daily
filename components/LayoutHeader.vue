@@ -26,24 +26,24 @@ const header = {
   <!-- 背景图 -->
   <div
     :style="{ backgroundImage: `url(${bannerImage})` }"
-    class="h-[300px] w-full bg-neutral-400 bg-no-repeat bg-center bg-cover relative"
+    class="relative h-[300px] w-full bg-neutral-400 bg-cover bg-center bg-no-repeat"
   >
     <!-- 按钮 -->
-    <div :class="extraClass" class="fixed top-0 w-full md:w-xl bg-neutral-100 transition-duration-300 z-10">
+    <div :class="extraClass" class="fixed top-0 z-10 w-full bg-neutral-100 transition-duration-300 md:w-xl">
       <div class="flex items-center justify-between text-xl">
-        <div class="p-2 m-2 rounded-lg cursor-pointer hover:bg-black/5">
+        <div class="m-2 cursor-pointer rounded-lg p-2 hover:bg-black/5">
           <div class="i-icon-park-solid:user" />
         </div>
-        <div class="p-2 m-2 rounded-lg cursor-pointer hover:bg-black/5">
+        <div class="m-2 cursor-pointer rounded-lg p-2 hover:bg-black/5">
           <div class="i-icon-park-solid:remind" />
         </div>
       </div>
     </div>
     <!-- 头像与 solgan -->
-    <div class="absolute top-64 right-6 flex flex-col items-end select-none">
+    <div class="absolute right-6 top-64 flex flex-col select-none items-end">
       <div class="flex">
-        <span class="mt-3 mr-4 text-white font-medium">{{ header.title }}</span>
-        <img class="w-15 h-15 rounded-md bg-white" :src="avatar" alt="avatar">
+        <span class="mr-4 mt-3 text-white font-medium">{{ header.title }}</span>
+        <img class="h-15 w-15 rounded-md bg-white" :src="avatar" alt="avatar">
       </div>
       <span class="mt-2 text-xs text-neutral-300">{{ header.description }}</span>
     </div>

@@ -29,14 +29,14 @@ function getGridComponent(imageCount: number) {
 <template>
   <div class="flex gap-3 pt-3">
     <!-- 头像 -->
-    <img class="w-9 h-9 rounded-md bg-white" :src="avatar" alt="avatar">
+    <img class="h-9 w-9 rounded-md bg-white" :src="avatar" alt="avatar">
     <!-- 内容 -->
-    <div class="text-sm cursor-default w-full">
-      <span class="text-primary pb-2 block">{{ post.user.name }}</span>
+    <div class="w-full cursor-default text-sm">
+      <span class="block pb-2 text-primary">{{ post.user.name }}</span>
       <p class="text-gray-800">
         {{ post.title }}
       </p>
-      <div class="pt-1 pb-4">
+      <div class="pb-4 pt-1">
         <component :is="getGridComponent(post.media.length)" :media="post.media" />
       </div>
       <!-- 底部 -->

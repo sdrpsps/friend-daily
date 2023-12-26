@@ -6,7 +6,7 @@ defineProps<{ media: Media[] }>()
 </script>
 
 <template>
-  <div v-viewer.static="viewerConfig" class="grid grid-cols-3 gap-1 w-4/5">
-    <img v-for="item in media" :key="item.url" class="object-cover object-center aspect-square rounded cursor-zoom-in w-full" :src="item.url" alt="content-image">
+  <div v-viewer.static="viewerConfig" class="grid grid-cols-3 w-4/5 gap-1">
+    <img v-for="item in media" :key="item.url" class="aspect-square w-full cursor-zoom-in rounded object-cover object-center" :src="item.url" alt="content-image">
   </div>
 </template>

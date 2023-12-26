@@ -15,13 +15,13 @@ const hasPaddingBottom = computed(() =>
 
 <template>
   <div>
-    <div class="flex justify-between items-center pb-4">
+    <div class="flex items-center justify-between pb-4">
       <!-- 时间 -->
-      <div class="text-neutral-300 text-xs select-none">
+      <div class="select-none text-xs text-neutral-300">
         {{ createTime }}
       </div>
       <!-- 点赞 -->
-      <div class="bg-bg text-primary px-1 rounded cursor-pointer">
+      <div class="cursor-pointer rounded bg-bg px-1 text-primary">
         <div class="i-ri:more-fill text-xl" />
       </div>
     </div>
