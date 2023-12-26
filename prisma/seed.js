@@ -4,8 +4,8 @@ const prisma = new PrismaClient()
 
 const userData = [
   {
-    name: 'Sunny',
-    email: 'sunny@bytespark.app',
+    name: process.env.USERNAME,
+    email: process.env.EMAIL,
     posts: [
       {
         title: 'Join the Prisma Slack',
@@ -13,7 +13,7 @@ const userData = [
         media: [
           { type: 'image', url: 'https://picsum.photos/200/200' },
         ],
-        likes: [],
+        likes: [{ name: '访客0' }, { name: '访客1' }, { name: '访客2' }],
         comments: [],
       },
       {
@@ -92,11 +92,11 @@ async function main() {
 
 async function clearData() {
   // 删除所有现有数据
-  await prisma.comment.deleteMany({});
-  await prisma.like.deleteMany({});
-  await prisma.media.deleteMany({});
-  await prisma.post.deleteMany({});
-  await prisma.user.deleteMany({});
+  await prisma.comment.deleteMany({})
+  await prisma.like.deleteMany({})
+  await prisma.media.deleteMany({})
+  await prisma.post.deleteMany({})
+  await prisma.user.deleteMany({})
 }
 
 main()

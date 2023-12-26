@@ -2,10 +2,10 @@
 import { useWindowScroll } from '@vueuse/core'
 
 // 获取滚动距离
-const { x: _x, y } = useWindowScroll()
+const { y } = useWindowScroll()
 
-// 顶部透明度
-const opacity = computed(() => {
+// 顶部透明度和图标颜色
+const extraClass = computed(() => {
   return y.value > 300 ? 'bg-opacity-100 text-neutral-400' : 'bg-opacity-0 text-white'
 })
 
@@ -16,11 +16,10 @@ const bannerImage = computed(() => 'https://static.bytespark.app/file/399c701beb
 // 头像地址
 const avatar = computed(() => 'https://static.bytespark.app/file/ed02ef201195aef1be23e.png')
 
-// 标题
-const title = computed(() => 'Sunny的朋友圈')
-
-// solgan
-const solgan = computed(() => '你有打火机吗？没有啊，那你是怎么点燃我的心的？')
+const header = {
+  title: import.meta.env.VITE_APP_TITLE,
+  description: import.meta.env.VITE_APP_DESCRIPTION,
+}
 </script>
 
 <template>
@@ -30,7 +29,7 @@ const solgan = computed(() => '你有打火机吗？没有啊，那你是怎么�
     class="h-[300px] w-full bg-neutral-400 bg-no-repeat bg-center bg-cover relative"
   >
     <!-- 按钮 -->
-    <div :class="opacity" class="fixed top-0 w-full md:w-xl bg-neutral-100 transition-duration-300 z-10">
+    <div :class="extraClass" class="fixed top-0 w-full md:w-xl bg-neutral-100 transition-duration-300 z-10">
       <div class="flex items-center justify-between text-xl">
         <div class="p-2 m-2 rounded-lg cursor-pointer hover:bg-black/5">
           <div class="i-icon-park-solid:user" />
@@ -43,10 +42,10 @@ const solgan = computed(() => '你有打火机吗？没有啊，那你是怎么�
     <!-- 头像与 solgan -->
     <div class="absolute top-64 right-6 flex flex-col items-end select-none">
       <div class="flex">
-        <span class="mt-3 mr-4 text-white font-medium">{{ title }}</span>
-        <img class="w-15 h-15 rounded-md bg-white" :src="avatar" alt="">
+        <span class="mt-3 mr-4 text-white font-medium">{{ header.title }}</span>
+        <img class="w-15 h-15 rounded-md bg-white" :src="avatar" alt="avatar">
       </div>
-      <span class="mt-2 text-xs text-neutral-300">{{ solgan }}</span>
+      <span class="mt-2 text-xs text-neutral-300">{{ header.description }}</span>
     </div>
   </div>
 </template>
