@@ -4,7 +4,9 @@ import ImageGrid2 from '~/components/Image/Grid2.vue'
 import ImageGrid3 from '~/components/Image/Grid3.vue'
 import type { PostItem } from '~/server/api/post/types'
 
-defineProps<{ post: PostItem }>()
+const props = defineProps<{ post: PostItem }>()
+// 跨组件
+provide<PostItem>('postItem', props.post)
 const avatar = computed(() => 'https://static.bytespark.app/file/ed02ef201195aef1be23e.png')
 
 function getGridComponent(imageCount: number) {
@@ -38,7 +40,7 @@ function getGridComponent(imageCount: number) {
         <component :is="getGridComponent(post.media.length)" :media="post.media" />
       </div>
       <!-- 底部 -->
-      <PostFooter :post="post" />
+      <PostFooter />
     </div>
   </div>
 </template>

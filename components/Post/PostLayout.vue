@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type { PostsResponse } from '~/server/api/post/types'
+import type { PostItem, PostsResponse } from '~/server/api/post/types'
 
-const { data: postList } = await useFetch<PostsResponse>('/api/post')
+const postList = ref<PostItem[]>([])
+const { data } = await useFetch<PostsResponse>('/api/post')
+postList.value = [...postList.value, ...data.value!.posts]
 </script>
 
 <template>
   <div class="px-5 pt-12">
-    <Post v-for="post in postList.posts" :key="post.id" :post="post" />
+    <Post v-for="post in postList" :key="post.id" :post="post" />
   </div>
 </template>
