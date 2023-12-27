@@ -18,6 +18,7 @@ export default defineConfig({
       primary: '#576b95',
       bg: '#f7f7f7',
       divider: '#f2f2f2',
+      toolbar: '#4b5153',
     },
   },
 })

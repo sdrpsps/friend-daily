@@ -11,6 +11,10 @@ const createTime = computed(() => useTimeAgo(postItem.createdAt).value.replace(/
 const hasPaddingBottom = computed(() =>
   (postItem.comments.length > 0 || postItem.likes.length > 0) ? 'pb-4' : '',
 )
+
+// 浮动菜单显示判断
+const toolbarRef = ref<HTMLElement | null>(null)
+const { isDisplay } = useClickOutside(toolbarRef)
 </script>
 
 <template>
@@ -21,8 +25,25 @@ const hasPaddingBottom = computed(() =>
         {{ createTime }}
       </div>
       <!-- 点赞 -->
-      <div class="cursor-pointer rounded bg-bg px-1 text-primary">
-        <div class="i-ri:more-fill text-xl" />
+      <div ref="toolbarRef" class="relative cursor-pointer rounded bg-bg px-1 text-primary">
+        <div class="i-ri:more-fill text-xl" @click="isDisplay = !isDisplay" />
+        <!-- 浮动菜单 -->
+        <Transition>
+          <div v-if="isDisplay" class="triangle-right absolute right-[40px] flex rounded bg-toolbar py-2 text-white -top-[8px]">
+            <div class="w-20 flex items-center justify-center border-r border-slate-800">
+              <div class="i-icon-park-outline:like" />
+              <div class="pl-1">
+                赞
+              </div>
+            </div>
+            <div class="w-20 flex items-center justify-center">
+              <div class="i-icon-park-outline:comment" />
+              <div class="pl-1">
+                评论
+              </div>
+            </div>
+          </div>
+        </Transition>
       </div>
     </div>
     <!-- 点赞和评论 -->
@@ -36,3 +57,29 @@ const hasPaddingBottom = computed(() =>
     <div class="border-b border-divider" />
   </div>
 </template>
+
+<style scoped>
+/* 三角形 */
+.triangle-right::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  border-left: 5px solid #4b5153;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+/* 浮动菜单动画 */
+.v-enter-active,
+.v-leave-active {
+  transition: all .3s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(80%);
+}
+</style>

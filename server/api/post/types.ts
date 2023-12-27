@@ -10,9 +10,29 @@ export interface PostItem {
   updatedAt: Date
   userId: string
   media: Media[]
-  likes: any[]
-  comments: any[]
+  likes: Like[]
+  comments: Comment[]
   user: User
+}
+
+export interface Comment {
+  id: string
+  name: string
+  email: string
+  content: string
+  website: null | string
+  replyToId: null | string
+  createdAt: Date
+  updatedAt: Date
+  postId: string
+}
+
+export interface Like {
+  id: string
+  name: string
+  createdAt: Date
+  updatedAt: Date
+  postId: string
 }
 
 export interface Media {
