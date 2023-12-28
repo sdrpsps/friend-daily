@@ -13,7 +13,7 @@ const userData = [
         media: [
           { type: 'image', url: 'https://picsum.photos/200/200' },
         ],
-        likes: [{ name: '访客0' }, { name: '访客1' }, { name: '访客2' }],
+        likes: [],
         comments: [
           {
             name: 'Peter',
@@ -111,7 +111,7 @@ async function main() {
 
       for (const l of likes) {
         const like = await prisma.like.create({
-          data: { ...l, postId: post.id },
+          data: { ...l, postId: post.id, userId: user.id },
         })
         console.log(`Created like with id: ${like.id} for post with id: ${post.id}`)
       }
