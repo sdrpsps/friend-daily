@@ -6,8 +6,8 @@ export interface PostItem {
   id: string
   title: string
   type: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
   userId: string
   media: Media[]
   likes: Like[]
@@ -22,17 +22,18 @@ export interface Comment {
   content: string
   website: null | string
   replyToId: null | string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
   postId: string
 }
 
 export interface Like {
   id: string
-  name: string
-  createdAt: Date
-  updatedAt: Date
+  name: string | null
+  createdAt: string
+  updatedAt: string
   postId: string
+  userId: string | null
 }
 
 export interface Media {

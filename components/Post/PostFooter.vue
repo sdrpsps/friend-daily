@@ -2,7 +2,7 @@
 import { useTimeAgo } from '@vueuse/core'
 import Like from '~/components/Post/Like.vue'
 import Comment from '~/components/Post/Comment.vue'
-import type { PostItem } from '~/server/api/post/types'
+import type { Like as ILike, PostItem } from '~/server/api/post/types'
 
 const postItem = inject<PostItem>('postItem')!
 const createTime = computed(() => useTimeAgo(postItem.createdAt).value.replace(/^["|'](.*)["|']$/g, '$1'))
@@ -15,6 +15,26 @@ const hasPaddingBottom = computed(() =>
 // 浮动菜单显示判断
 const toolbarRef = ref<HTMLElement | null>(null)
 const { isDisplay } = useClickOutside(toolbarRef)
+
+// 点赞
+const likeStatus = ref(false)
+async function onLike() {
+  if (likeStatus.value) {
+    const { data } = await useFetch('/api/post/like', { method: 'DELETE', body: { id: postItem.id } })
+
+    const index = postItem.likes.findIndex(item => item.id === data.value?.result.id)
+    postItem.likes.splice(index, 1)
+  }
+  else {
+    const { data } = await useFetch('/api/post/like', { method: 'POST', body: { id: postItem.id } })
+
+    postItem.likes.push(data.value?.result as ILike)
+    setTimeout(() => {
+      isDisplay.value = false
+    }, 300)
+  }
+  likeStatus.value = !likeStatus.value
+}
 </script>
 
 <template>
@@ -30,8 +50,9 @@ const { isDisplay } = useClickOutside(toolbarRef)
         <!-- 浮动菜单 -->
         <Transition>
           <div v-if="isDisplay" class="triangle-right absolute right-[40px] flex rounded bg-toolbar py-2 text-white -top-[8px]">
-            <div class="w-20 flex items-center justify-center border-r border-slate-800">
-              <div class="i-icon-park-outline:like" />
+            <div class="w-20 flex items-center justify-center border-r border-slate-800" @click="onLike">
+              <div v-if="!likeStatus" class="i-icon-park-outline:like" />
+              <div v-else class="i-icon-park-solid:like text-rose-500" />
               <div class="pl-1">
                 赞
               </div>

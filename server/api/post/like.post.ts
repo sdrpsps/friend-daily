@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     success: true,
-    message: 'ok',
+    message: '点赞成功',
     result: like,
   }
 })
