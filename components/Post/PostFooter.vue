@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTimeAgo } from '@vueuse/core'
 import Like from '~/components/Post/Like.vue'
-import Comment from '~/components/Post/Comment.vue'
+import Comments from '~/components/Post/Comments.vue'
 import type { Like as ILike, PostItem } from '~/server/api/post/types'
 
 const postItem = inject<PostItem>('postItem')!
@@ -72,7 +72,7 @@ async function onLike() {
       <!-- 点赞列表 -->
       <Like />
       <!-- 评论区 -->
-      <Comment />
+      <Comments />
     </div>
     <!-- 分割线 -->
     <div class="border-b border-divider" />
