@@ -1,27 +1,29 @@
 <script setup lang="ts">
+import type { DefineComponent } from 'vue'
 import ImageGrid1 from '~/components/Image/Grid1.vue'
 import ImageGrid2 from '~/components/Image/Grid2.vue'
 import ImageGrid3 from '~/components/Image/Grid3.vue'
-import type { PostItem } from '~/server/api/post/types'
+import type { Media, PostItem } from '~/server/api/post/types'
 
 const props = defineProps<{ post: PostItem }>()
 // 跨组件
 provide<PostItem>('postItem', props.post)
 const avatar = computed(() => 'https://static.bytespark.app/file/ed02ef201195aef1be23e.png')
 
+// 根据图片数量映射不同的组件
+type GridComponentType = DefineComponent<{ media: Media[] }, object, any>
+const gridMapping: Record<number, GridComponentType> = {
+  1: ImageGrid1 as GridComponentType,
+  2: ImageGrid2 as GridComponentType,
+  3: ImageGrid3 as GridComponentType,
+  4: ImageGrid2 as GridComponentType,
+  5: ImageGrid2 as GridComponentType,
+  6: ImageGrid2 as GridComponentType,
+  7: ImageGrid2 as GridComponentType,
+  8: ImageGrid3 as GridComponentType,
+  9: ImageGrid3 as GridComponentType,
+}
 function getGridComponent(imageCount: number) {
-  const gridMapping: Record<number, InstanceType<typeof ImageGrid1>> = {
-    1: ImageGrid1,
-    2: ImageGrid2,
-    3: ImageGrid3,
-    4: ImageGrid2,
-    5: ImageGrid2,
-    6: ImageGrid2,
-    7: ImageGrid2,
-    8: ImageGrid3,
-    9: ImageGrid3,
-  }
-
   return gridMapping[imageCount]
 }
 </script>
