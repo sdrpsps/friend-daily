@@ -7,7 +7,7 @@ postList.value = [...postList.value, ...data.value!.posts]
 </script>
 
 <template>
-  <div class="px-5 pt-12">
+  <div class="px-5 pb-2 pt-12">
     <Post v-for="post in postList" :key="post.id" :post="post" />
   </div>
 </template>
