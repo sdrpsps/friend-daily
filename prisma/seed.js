@@ -20,59 +20,8 @@ const userData = [
             email: 'j8qFm@example.com',
             content: 'Hi',
             website: 'https://google.com',
-            replies:
-                [
-                  {
-                    name: 'Sunny',
-                    email: 'fXvK9@example.com',
-                    content: '你好啊',
-                    website: 'https://bing.com',
-                  },
-                ],
-          },
-          {
-            name: '只因你太美',
-            email: 'j8qFm@example.com',
-            content: '你干嘛😊',
-            website: 'https://google.com',
-            replies:
-                [
-                  {
-                    name: '蔡徐坤',
-                    email: 'fXvK9@example.com',
-                    content: '小黑子，律师函警告⚠️',
-                    website: 'https://google.com',
-                  },
-                ],
-          },
-          {
-            name: 'Sunny',
-            email: 'fXvK9@example.com',
-            content: '怎么哪里都有咯咯的粉丝😭',
-            website: 'https://bing.com',
           },
         ],
-      },
-      {
-        title: 'Ask a question about Prisma on GitHub',
-        type: 'image',
-        media: [
-          { type: 'image', url: 'https://picsum.photos/200/200' },
-          { type: 'image', url: 'https://picsum.photos/300/200' },
-        ],
-        likes: [],
-        comments: [],
-      },
-      {
-        title: 'Prisma on YouTube',
-        type: 'image',
-        media: [
-          { type: 'image', url: 'https://picsum.photos/200/200' },
-          { type: 'image', url: 'https://picsum.photos/300/200' },
-          { type: 'image', url: 'https://picsum.photos/250/200' },
-        ],
-        likes: [],
-        comments: [],
       },
     ],
   },
@@ -122,13 +71,6 @@ async function main() {
           data: { ...commentWithoutReplies, postId: post.id },
         })
         console.log(`Created comment with id: ${comment.id} for post with id: ${post.id}`)
-
-        for (const r of replies || []) {
-          const reply = await prisma.comment.create({
-            data: { ...r, postId: post.id, replyToId: comment.id },
-          })
-          console.log(`Created reply with id: ${reply.id} for comment with id: ${comment.id}`)
-        }
       }
     }
   }

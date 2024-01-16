@@ -1,19 +1,35 @@
 import { prisma } from '~/prisma/db'
 
-export default async function isUserExist(id: string) {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    })
+export async function isUserExistById(id: string, needThrow = true) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  })
 
-    return user
-  }
-  catch (error) {
+  if (!user && needThrow) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'User not found',
+      statusMessage: '用户不存在',
     })
   }
+
+  return user
+}
+
+export async function isUserExistByEmail(email: string, needThrow = true) {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  })
+
+  if (!user && needThrow) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: '用户不存在',
+    })
+  }
+
+  return user
 }

@@ -25,6 +25,8 @@ export interface Comment {
   createdAt: string
   updatedAt: string
   postId: string
+  userId: string
+  parentId: null | string
 }
 
 export interface Like {

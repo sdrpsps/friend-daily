@@ -3,7 +3,7 @@ import { useTimeAgo } from '@vueuse/core'
 import Like from '~/components/Post/Like.vue'
 import Comments from '~/components/Post/Comments.vue'
 import Reply from '~/components/Post/Reply.vue'
-import type { Like as ILike, PostItem } from '~/server/api/post/types'
+import type { Like as ILike, PostItem } from '~/server/api/types'
 
 const postItem = inject<PostItem>('postItem')!
 const createTime = computed(() => useTimeAgo(postItem.createdAt).value.replace(/^["|'](.*)["|']$/g, '$1'))
@@ -16,13 +16,13 @@ const { isDisplay: isDisplayToolbar } = useClickOutside(toolbarRef)
 const likeStatus = ref(false)
 async function onLike() {
   if (likeStatus.value) {
-    const { data } = await useFetch('/api/post/like', { method: 'DELETE', body: { id: postItem.id } })
+    const { data } = await useFetch('/api/like', { method: 'DELETE', body: { postId: postItem.id } })
 
     const index = postItem.likes.findIndex(item => item.id === data.value?.result.id)
     postItem.likes.splice(index, 1)
   }
   else {
-    const { data } = await useFetch('/api/post/like', { method: 'POST', body: { id: postItem.id } })
+    const { data } = await useFetch('/api/like', { method: 'POST', body: { postId: postItem.id } })
 
     postItem.likes.push(data.value?.result as ILike)
     setTimeout(() => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Comment from '~/components/Post/Comment.vue'
-import type { PostItem } from '~/server/api/post/types'
+import type { PostItem } from '~/server/api/types'
 
 const postItem = inject<PostItem>('postItem')!
 </script>

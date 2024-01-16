@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PostItem, PostsResponse } from '~/server/api/post/types'
+import type { PostItem, PostsResponse } from '~/server/api/types'
 
 const postList = ref<PostItem[]>([])
 const { data } = await useFetch<PostsResponse>('/api/post')

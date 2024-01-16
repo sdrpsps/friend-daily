@@ -3,7 +3,7 @@ import type { DefineComponent } from 'vue'
 import ImageGrid1 from '~/components/Image/Grid1.vue'
 import ImageGrid2 from '~/components/Image/Grid2.vue'
 import ImageGrid3 from '~/components/Image/Grid3.vue'
-import type { Media, PostItem } from '~/server/api/post/types'
+import type { Media, PostItem } from '~/server/api/types'
 
 const props = defineProps<{ post: PostItem }>()
 // 跨组件

@@ -25,8 +25,8 @@ model Post {
   comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  user      User      @relation(fields: [userId], references: [id])
   userId    String    @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id])
 }
 
 model Media {
@@ -35,8 +35,8 @@ model Media {
   description String?
   url         String?
   type        String
-  post        Post?   @relation(fields: [postId], references: [id])
   postId      String? @db.ObjectId
+  post        Post?   @relation(fields: [postId], references: [id])
 }
 
 model Like {
@@ -51,15 +51,18 @@ model Like {
 }
 
 model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String
-  content   String
-  website   String?
-  replyToId String?  @db.ObjectId
-  replyTo   User?    @relation(fields: [replyToId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String   @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String
+  content       String
+  website       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  postId        String    @map("post_id") @db.ObjectId
+  userId        String?   @map("user_id") @db.ObjectId
+  post          Post      @relation(fields: [postId], references: [id])
+  user          User?     @relation(fields: [userId], references: [id])
+  parentId      String?   @map("parent_id") @db.ObjectId
+  parent        Comment?  @relation("ChildComments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childComments Comment[] @relation("ChildComments")
 }

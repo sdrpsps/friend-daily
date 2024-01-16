@@ -1,23 +1,23 @@
 import { prisma } from '~/prisma/db'
 import isPostExist from '~/server/utils/isPostExist'
-import isUserExist from '~/server/utils/isUserExist'
+import { isUserExistById } from '~/server/utils/isUserExist'
 
 export default defineEventHandler(async (event) => {
-  const { id, userId } = await readBody(event)
+  const { postId, userId } = await readBody(event)
 
   let user = null
   if (userId)
-    user = await isUserExist(userId)
+    user = await isUserExistById(userId)
 
-  await isPostExist(id)
-  await isLikeExist(id, userId, false)
+  await isPostExist(postId)
+  await isLikeExist(postId, userId, false)
 
   const like = await prisma.like.create({
     data: {
       name: user ? user.name : '访客',
       post: {
         connect: {
-          id,
+          id: postId,
         },
       },
       user: userId
