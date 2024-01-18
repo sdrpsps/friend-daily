@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <div class="mx-auto h-full w-full bg-white md:w-xl">
     <LayoutHeader />

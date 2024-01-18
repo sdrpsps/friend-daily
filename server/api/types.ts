@@ -1,54 +1,52 @@
-export interface PostsResponse {
+export interface PostResponse {
   posts: PostItem[]
 }
 
 export interface PostItem {
+  comments: Comment[]
+  createdAt: string
   id: string
+  likes: Like[]
+  media: Media[]
   title: string
   type: string
-  createdAt: string
   updatedAt: string
-  userId: string
-  media: Media[]
-  likes: Like[]
-  comments: Comment[]
   user: User
+  userId: string
 }
 
 export interface Comment {
+  content: string
+  createdAt: string
+  email: string
   id: string
   name: string
-  email: string
-  content: string
-  website: null | string
-  replyToId: null | string
-  createdAt: string
-  updatedAt: string
   postId: string
-  userId: string
   parentId: null | string
+  updatedAt: string
+  website: null | string
 }
 
 export interface Like {
-  id: string
-  name: string | null
   createdAt: string
-  updatedAt: string
+  id: string
+  name: string
   postId: string
-  userId: string | null
+  updatedAt: string
+  userId: null | string
 }
 
 export interface Media {
+  description: null
   id: string
   name: null
-  description: null
-  url: string
-  type: string
   postId: string
+  type: string
+  url: string
 }
 
 export interface User {
+  email: string
   id: string
   name: string
-  email: string
 }

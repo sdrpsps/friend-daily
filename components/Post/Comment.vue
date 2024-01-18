@@ -40,7 +40,7 @@ function onShowInput() {
     </section>
 
     <!-- 回复框 -->
-    <Reply v-if="isDisplay" :reply-name="comment.name" />
+    <Reply v-if="isDisplay" :reply-name="comment.name" :parent-id="comment.id" @on-close="isDisplay = false" />
   </div>
 </template>
 

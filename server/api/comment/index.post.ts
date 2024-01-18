@@ -1,7 +1,7 @@
 import { prisma } from '~/prisma/db'
+import { createUserLogic } from '~/server/api/user/create.post'
 import isPostExist from '~/server/utils/isPostExist'
 import { isUserExistByEmail } from '~/server/utils/isUserExist'
-import { createUserLogic } from '~/server/api/user/create.post'
 
 export default defineEventHandler(async (event) => {
   const { postId, name, email, website, content, parentId } = await readBody(event)

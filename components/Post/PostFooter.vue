@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTimeAgo } from '@vueuse/core'
 import Like from '~/components/Post/Like.vue'
-import Comments from '~/components/Post/Comments.vue'
+import Comment from '~/components/Post/Comment.vue'
 import Reply from '~/components/Post/Reply.vue'
 import type { Like as ILike, PostItem } from '~/server/api/types'
 
@@ -44,7 +44,7 @@ function onShowReply() {
 
 // 通过是否有评论和是否显示回复来显示点赞评论分割线
 const isDisplayDivider = computed(() =>
-  (postItem.comments.length > 0 || isDisplayReply.value),
+  postItem.likes.length > 0 && (postItem.comments.length > 0 || isDisplayReply.value),
 )
 </script>
 
@@ -86,10 +86,12 @@ const isDisplayDivider = computed(() =>
       <span v-if="isDisplayDivider" class="block border-b border-divider" />
       <!-- 回复 -->
       <div v-if="isDisplayReply" ref="replyRef" class="px-3 py-1">
-        <Reply :reply-name="postItem.user.name" />
+        <Reply :reply-name="postItem.user.name" @on-close="isDisplayReply = false" />
       </div>
       <!-- 评论区 -->
-      <Comments />
+      <div v-if="postItem.comments.length > 0" class="flex flex-col bg-bg px-3 py-2 text-primary">
+        <Comment v-for="comment in postItem.comments" :key="comment.id" :comment="comment" class="py-0.5" />
+      </div>
     </div>
     <!-- 底部分割线 -->
     <span class="block border-b border-divider pt-3" />
