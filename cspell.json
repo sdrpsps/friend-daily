@@ -19,8 +19,9 @@
     "nuxtjs",
     "solgan",
     "unocss",
-    "vueuse",
-    "viewerjs"
+    "viewerjs",
+    "vnode",
+    "vueuse"
   ],
   "ignoreWords": [],
   "import": []
