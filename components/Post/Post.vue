@@ -39,7 +39,9 @@ function getGridComponent(imageCount: number) {
         {{ post.title }}
       </p>
       <div class="pb-4 pt-1">
-        <component :is="getGridComponent(post.media.length)" :media="post.media" />
+        <ClientOnly>
+          <component :is="getGridComponent(post.media.length)" :media="post.media" />
+        </ClientOnly>
       </div>
       <!-- 底部 -->
       <PostFooter />

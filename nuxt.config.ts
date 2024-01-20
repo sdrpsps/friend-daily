@@ -4,13 +4,21 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      title: import.meta.env.VITE_APP_TITLE,
+      title: import.meta.env.TITLE,
       meta: [
-        { name: 'description', content: import.meta.env.VITE_APP_DESCRIPTION },
+        { name: 'description', content: import.meta.env.DESCRIPTION },
       ],
     },
   },
   modules: [
     '@unocss/nuxt',
   ],
+  runtimeConfig: {
+    public: {
+      TITLE: import.meta.env.TITLE,
+      DESCRIPTION: import.meta.env.DESCRIPTION,
+      USERNAME: import.meta.env.USERNAME,
+      EMAIL: import.meta.env.EMAIL,
+    },
+  },
 })

@@ -13,17 +13,3 @@ services:
       MONGO_COMMAND: mongo
     ports:
       - '27017:27017'
-    healthcheck:
-      # Use "mongo" instead of "mongosh" before v5.0
-      test:
-        - CMD
-        - mongo
-        - admin
-        - --port
-        - '27017'
-        - --eval
-        - 'db.adminCommand(''ping'').ok'
-
-      interval: 5s
-      timeout: 2s
-      retries: 20

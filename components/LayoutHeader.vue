@@ -16,9 +16,10 @@ const bannerImage = computed(() => 'https://static.bytespark.app/file/399c701beb
 // 头像地址
 const avatar = computed(() => 'https://static.bytespark.app/file/ed02ef201195aef1be23e.png')
 
+const { public: _public } = useRuntimeConfig()
 const header = {
-  title: import.meta.env.VITE_APP_TITLE,
-  description: import.meta.env.VITE_APP_DESCRIPTION,
+  title: _public.TITLE,
+  description: _public.DESCRIPTION,
 }
 </script>
 
