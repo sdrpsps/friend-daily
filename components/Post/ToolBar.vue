@@ -1,0 +1,71 @@
+<script setup lang="ts">
+defineProps<{
+  visible: boolean
+  data: { id: number, name: string, content: string, date: string, address: string }
+}>()
+
+const emit = defineEmits(['hide', 'comment'])
+
+function onHide() {
+  emit('hide')
+}
+
+const isLike = ref(false)
+function onLike() {
+  isLike.value = !isLike.value
+  setTimeout(() => {
+    emit('hide')
+  }, 800)
+}
+
+function onComment() {
+  emit('comment')
+  emit('hide')
+}
+</script>
+
+<template>
+  <Transition>
+    <div v-if="visible" v-click-outside="onHide" class="triangle-right absolute right-[40px] flex rounded bg-toolbar py-2 text-white -top-[8px]">
+      <div class="w-20 flex items-center justify-center border-r border-slate-800" @click="onLike">
+        <div v-if="!isLike" class="i-icon-park-outline:like" />
+        <div v-else class="i-icon-park-solid:like text-rose-500" />
+        <div class="pl-1">
+          赞
+        </div>
+      </div>
+      <div class="w-20 flex items-center justify-center" @click.stop="onComment">
+        <div class="i-icon-park-outline:comment" />
+        <div class="pl-1">
+          评论
+        </div>
+      </div>
+    </div>
+  </Transition>
+</template>
+
+<style scoped>
+/* 三角形 */
+.triangle-right::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  border-left: 5px solid #4b5153;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+/* 浮动菜单动画 */
+.v-enter-active,
+.v-leave-active {
+  transition: all .2s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(20%);
+}
+</style>

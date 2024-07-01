@@ -1,0 +1,35 @@
+{
+  "name": "nuxt-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --host",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@github/textarea-autosize": "^0.3.3",
+    "@prisma/client": "5.15.1",
+    "@unocss/reset": "^0.61.0",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
+    "nuxt": "^3.12.2",
+    "vue": "^3.4.29",
+    "vue-i18n": "^9.13.1",
+    "vue-router": "^4.3.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.21.1",
+    "@iconify/json": "^2.2.223",
+    "@unocss/eslint-plugin": "^0.61.0",
+    "@unocss/nuxt": "^0.61.0",
+    "@unocss/preset-uno": "^0.61.0",
+    "eslint": "9.4.0",
+    "prisma": "^5.15.1",
+    "unocss": "^0.61.0"
+  }
+}
