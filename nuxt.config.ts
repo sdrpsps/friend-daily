@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import process from 'node:process'
 
 export default defineNuxtConfig({
@@ -7,21 +6,17 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no',
-      title: process.env.TITLE,
-      meta: [
-        { name: 'description', content: process.env.DESCRIPTION },
-      ],
     },
   },
   modules: ['@unocss/nuxt', '@vueuse/nuxt'],
   runtimeConfig: {
     public: {
-      TITLE: process.env.TITLE,
-      DESCRIPTION: process.env.DESCRIPTION,
-      USERNAME: process.env.USERNAME,
-      EMAIL: process.env.EMAIL,
-      BANNER_IMAGE: process.env.BANNER_IMAGE,
-      AVATAR: process.env.AVATAR,
+      TITLE: process.env.NUXT_PUBLIC_TITLE || '默认标题',
+      USERNAME: process.env.NUXT_PUBLIC_USERNAME || '默认用户名',
+      DESCRIPTION: process.env.NUXT_PUBLIC_DESCRIPTION || '默认描述',
+      EMAIL: process.env.NUXT_PUBLIC_EMAIL || 'xx@xx.com',
+      BANNER_IMAGE: process.env.NUXT_PUBLIC_BANNER_IMAGE || 'https://imgapi.cn/bing.php',
+      AVATAR: process.env.NUXT_PUBLIC_AVATAR || './avatar.webp',
     },
   },
 })

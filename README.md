@@ -4,24 +4,27 @@ H5 朋友圈
 
 ## 目标
 
-- 复刻 [https://kam.space](https://kam.space)
+复刻 [https://kam.space](https://kam.space)
 
-## 编译
+## 如何启动？
+
+使用 Docker
 
 ```shell
-docker build \
-      --build-arg DATABASE_URL="mysql://friend:password@127.0.0.1:3306/friend-daily" \
-      --build-arg TITLE="XXX" \
-      --build-arg USERNAME="XXX" \
-      --build-arg DESCRIPTION="XXXXXX" \
-      --build-arg EMAIL="xx@xxx.com" \
-      --build-arg BANNER_IMAGE="https://imgapi.cn/bing.php" \
-      --build-arg AVATAR="./avatar.webp" \
-      -t friend-daily .
+docker run -d --name friend-daily \
+-e DATABASE_URL="mysql://root:password@127.0.0.1:3306/friend-daily" \
+-e NUXT_PUBLIC_TITLE="默认标题" \
+-e NUXT_PUBLIC_USERNAME="默认用户名" \
+-e NUXT_PUBLIC_DESCRIPTION="默认描述" \
+-e NUXT_PUBLIC_EMAIL="xx@xx.com" \
+-e NUXT_PUBLIC_BANNER_IMAGE="https://imgapi.cn/bing.php" \
+-e NUXT_PUBLIC_AVATAR="./avatar.webp" \
+-p 3000:3000 \
+sdrpsps/friend-daily
 ```
 
-## 启动
+## 编译镜像
 
 ```shell
-docker run --name friend-daily -p 3000:3000 -d friend-daily
+docker build -t sdrpsps/friend-daily .
 ```

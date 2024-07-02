@@ -1,41 +1,34 @@
+# 使用 Node.js 18 的 Alpine 版本作为构建镜像
 FROM node:18-alpine AS builder
 
+# 设置工作目录
 WORKDIR /app
 
+# 复制 package.json 文件到工作目录
 COPY package.json .
 
+# 安装 pnpm
 RUN npm install -g pnpm
+# 安装项目依赖
 RUN pnpm install
 
+# 复制所有文件到工作目录
 COPY . .
 
-# 定义构建参数，设置默认值
-ARG DATABASE_URL="mysql://root:password@127.0.0.1:3306/friend"
-ARG TITLE="默认用户名的朋友圈"
-ARG USERNAME="默认用户名"
-ARG DESCRIPTION="默认简介"
-ARG EMAIL="xxx@xx.com"
-ARG BANNER_IMAGE="https://imgapi.cn/bing.php"
-ARG AVATAR="./avatar.webp"
-
-
-# 使用构建参数设置环境变量
-ENV DATABASE_URL=$DATABASE_URL
-ENV TITLE=$TITLE
-ENV USERNAME=$USERNAME
-ENV DESCRIPTION=$DESCRIPTION
-ENV EMAIL=$EMAIL
-ENV BANNER_IMAGE=$BANNER_IMAGE
-ENV AVATAR=$AVATAR
-
+# 构建项目
 RUN pnpm build
 
+# 使用 Node.js 18 的 Alpine 版本作为生产镜像
 FROM node:18-alpine AS production
 
+# 设置工作目录
 WORKDIR /app
 
+# 复制构建后的文件到生产镜像
 COPY --from=builder /app/.output /app
 
+# 暴露端口
 EXPOSE 3000
 
-CMD ["node","./server/index.mjs"]
+# 运行容器时的命令
+CMD ["node", "./server/index.mjs"]
