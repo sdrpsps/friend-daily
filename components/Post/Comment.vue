@@ -1,79 +1,42 @@
 <script setup lang="ts">
-import autosize from '@github/textarea-autosize'
-import { nextTick, onMounted, ref } from 'vue'
+import HeightTransition from '../Common/HeightTransition.vue'
+import UserName from './UserName.vue'
 
 defineProps<{
-  data: { id: number, name: string, content: string, date: string, address: string }
+  comment: { id: number, name: string, content: string, website?: string, parentId?: number }
 }>()
-
-const emit = defineEmits(['hide'])
-function onHide() {
-  emit('hide')
-}
-
-const textareaRef = ref<HTMLElement | null>(null)
-
-// 表单字段
-const fields = ref([
-  { name: 'content', type: 'text', value: '', maxlength: 140, required: true, placeholder: '内容 *' },
-  {
-    name: 'name',
-    type: 'text',
-    value: '',
-    maxlength: 32,
-    required: true,
-    placeholder: '昵称 *',
-    pattern: '^[a-zA-Z\\u4E00-\\u9FA5][a-zA-Z0-9\\u4E00-\\u9FA5\\-·]*[a-zA-Z0-9\\u4E00-\\u9FA5]?$',
-  },
-  { name: 'email', type: 'email', value: '', maxlength: 70, required: true, placeholder: '邮箱 *' },
-  { name: 'website', type: 'url', value: '', maxlength: 70, required: false, placeholder: '网站' },
-])
-
-function onAutoSizeTextarea() {
-  nextTick(() => autosize(textareaRef.value as HTMLTextAreaElement))
-}
-
-// 提交
-async function onSubmit(e: Event) {
-  e.preventDefault()
-}
-
-// 挂载时使 textarea 高度自适应
-onMounted(() => {
-  onAutoSizeTextarea()
-})
+// 获取回复用户
+// const replyName = computed(() => postItem.comments.find(item => item.id === comment.parentId)?.name)
+// const replyWebsite = computed(() => postItem.comments.find(item => item.id === comment.parentId)?.website)
 </script>
 
 <template>
-  <div v-click-outside="onHide" class="mt-1 h-full w-full border b-primaryGreen rounded bg-white p-2">
-    <form @submit="onSubmit">
-      <textarea
-        ref="textareaRef"
-        v-model="fields[0].value"
-        class="w-full resize-none b-none outline-none"
-        placeholder="评论"
-        :maxlength="fields[0].maxlength"
-        :required="fields[0].required"
-      />
-      <div class="flex items-start justify-between">
-        <div class="bg-bg w-2/3 flex flex-col rounded py-2">
-          <input
-            v-for="field in fields.slice(1)"
-            :key="field.name"
-            v-model="field.value"
-            class="border-b bg-transparent pt-1 outline-none first:pt-0"
-            :name="field.name"
-            :type="field.type"
-            :maxlength="field.maxlength"
-            :placeholder="field.placeholder"
-            :required="field.required"
-            :pattern="field?.pattern"
-          >
-        </div>
-        <button class="rounded bg-primaryGreen px-5 py-1 text-white">
-          评论
-        </button>
-      </div>
-    </form>
+  <div class="px-2 hover:cursor-alias">
+    <!-- 被回复评论 -->
+    <template v-if="comment.parentId">
+      <UserName :name="comment.name" :website="comment.website" />
+      <span class="px-0.5 text-gray-800">回复</span>
+      <!-- <UserName :name="replyName" :website="replyWebsite" /> -->
+      <span class="pr-1">:</span>
+      <span class="comment-content">{{ comment.content }}</span>
+    </template>
+    <!-- 普通评论 -->
+    <template v-else>
+      <UserName :name="comment.name" :website="comment.website" />
+      <span class="pr-1">:</span>
+      <span class="comment-content">{{ comment.content }}</span>
+    </template>
+    <!-- 输入框 -->
+    <ClientOnly>
+      <HeightTransition>
+        <slot />
+      </HeightTransition>
+    </ClientOnly>
   </div>
 </template>
+
+<style scoped>
+.comment-content{
+  --at-apply: text-gray-800 whitespace-pre-wrap overflow-hidden;
+}
+</style>

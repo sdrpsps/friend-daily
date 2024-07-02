@@ -4,7 +4,7 @@ defineProps<{
   data: { id: number, name: string, content: string, date: string, address: string }
 }>()
 
-const emit = defineEmits(['hide', 'comment'])
+const emit = defineEmits(['hide', 'reply'])
 
 function onHide() {
   emit('hide')
@@ -15,11 +15,11 @@ function onLike() {
   isLike.value = !isLike.value
   setTimeout(() => {
     emit('hide')
-  }, 800)
+  }, 500)
 }
 
-function onComment() {
-  emit('comment')
+function onReply() {
+  emit('reply')
   emit('hide')
 }
 </script>
@@ -27,19 +27,19 @@ function onComment() {
 <template>
   <Transition>
     <div v-if="visible" v-click-outside="onHide" class="triangle-right absolute right-[40px] flex rounded bg-toolbar py-2 text-white -top-[8px]">
-      <div class="w-20 flex items-center justify-center border-r border-slate-800" @click="onLike">
+      <button class="w-20 flex items-center justify-center border-r border-slate-800 bg-toolbar" @click="onLike">
         <div v-if="!isLike" class="i-icon-park-outline:like" />
         <div v-else class="i-icon-park-solid:like text-rose-500" />
         <div class="pl-1">
           赞
         </div>
-      </div>
-      <div class="w-20 flex items-center justify-center" @click.stop="onComment">
+      </button>
+      <button class="w-20 flex items-center justify-center bg-toolbar" @click.stop="onReply">
         <div class="i-icon-park-outline:comment" />
         <div class="pl-1">
           评论
         </div>
-      </div>
+      </button>
     </div>
   </Transition>
 </template>

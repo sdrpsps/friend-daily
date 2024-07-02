@@ -7,7 +7,7 @@ defineOptions({
 
 const currentState = ref({
   post: null,
-  comment: null,
+  reply: null,
 })
 
 const postList = ref([
@@ -17,6 +17,30 @@ const postList = ref([
     content: '今天的我排位输了好多把，我将这些事情分享给您，但是你一个字都没有讲，我在想你是不是在忙？我头痛欲裂，终于在我给你发了几十条消息之后，你终于回了我一个脑子是不是有病？原来你还是关心我的，看到这句话，我的脑子一下就不疼了，今天也是爱你的一天',
     date: '2024-06-30 15:00:00',
     address: '蔡徐村 · 村口',
+    likes: [
+      {
+        id: 1,
+        name: '汪汪',
+      },
+      {
+        id: 2,
+        name: '汪汪2',
+      },
+    ],
+    comments: [
+      {
+        id: 1,
+        name: '汪汪',
+        website: 'https://baidu.com',
+        content: '和他退房了吗？可以回我消息了吗？',
+      },
+      {
+        id: 2,
+        name: '汪汪2',
+        website: 'https://baidu.com',
+        content: '今天保安队长心情不好拿我撒气，因为他不会唱惊雷，他的女神很生气的骂他说他不懂潮流不懂时尚，所以队长冲我吼了一天惊雷，这通天修为天塌地陷紫金锤我委屈，我想你。',
+      },
+    ],
   },
   {
     id: 2,
@@ -24,6 +48,16 @@ const postList = ref([
     content: '今天你终于都我说了“喜欢”这个词，我等了好久了。你对我说：“我喜欢的人不是你”。我知道你是在考验我，宝贝我会一直等你的。',
     date: '2024-06-29 15:00:00',
     address: '蔡徐村 · 村口',
+    likes: [
+      {
+        id: 1,
+        name: '汪汪',
+      },
+      {
+        id: 2,
+        name: '汪汪2',
+      },
+    ],
   },
   {
     id: 3,
@@ -54,7 +88,7 @@ const postList = ref([
     v-for="item in postList"
     :key="item.id"
     v-model:current-post="currentState.post"
-    v-model:current-comment="currentState.comment"
+    v-model:current-reply="currentState.reply"
     :data="item"
   />
 </template>

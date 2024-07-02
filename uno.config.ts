@@ -1,10 +1,13 @@
 // uno.config.ts
-import { defineConfig, presetIcons, presetUno } from 'unocss'
+import { defineConfig, presetIcons, presetUno, transformerDirectives } from 'unocss'
 
 export default defineConfig({
   presets: [
     presetUno(),
     presetIcons(),
+  ],
+  transformers: [
+    transformerDirectives(),
   ],
   theme: {
     colors: {

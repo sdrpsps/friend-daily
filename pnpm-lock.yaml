@@ -51,6 +51,9 @@ importers:
       '@unocss/preset-uno':
         specifier: ^0.61.0
         version: 0.61.0
+      '@unocss/transformer-directives':
+        specifier: ^0.61.0
+        version: 0.61.0
       eslint:
         specifier: 9.4.0
         version: 9.4.0
