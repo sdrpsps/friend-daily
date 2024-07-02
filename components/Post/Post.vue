@@ -32,7 +32,7 @@ function hideComment() {
 
 <template>
   <article class="flex gap-3 pt-3">
-    <img class="h-9 w-9 rounded-md bg-white object-cover" :src="env.AVATAR" alt="avatar">
+    <img class="h-9 w-9 flex-shrink-0 rounded-md bg-white object-cover" :src="env.AVATAR" alt="avatar">
     <main class="w-full cursor-default text-sm">
       <span class="block pb-2 text-primary">{{ data.name }}</span>
       <p class="pb-3 text-gray-800">

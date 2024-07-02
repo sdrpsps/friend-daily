@@ -3,7 +3,7 @@ import Header from './Header.vue'
 </script>
 
 <template>
-  <div class="mx-auto h-full w-full bg-white pb-2 md:w-xl">
+  <div class="min-h-screen w-full bg-white pb-2 md:w-xl">
     <Header />
     <section class="px-5 pt-12">
       <NuxtPage />
