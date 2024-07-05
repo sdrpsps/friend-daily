@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Divider from '../Common/Divider.vue'
 import HeightTransition from '../Common/HeightTransition.vue'
-import ToolBar from './ToolBar.vue'
-import Reply from './Reply.vue'
-import Like from './Like.vue'
+import ImagePreview from '../Common/ImagePreview.vue'
 import Comment from './Comment.vue'
+import Like from './Like.vue'
+import Reply from './Reply.vue'
+import ToolBar from './ToolBar.vue'
 
 const props = defineProps<{
   currentPost: number | null
@@ -17,6 +18,7 @@ const props = defineProps<{
     address: string
     likes?: { id: number, name: string }[]
     comments?: { id: number, name: string, content: string, website?: string, parentId?: number }[]
+    assets?: string[]
   }
 }>()
 
@@ -24,6 +26,8 @@ const emit = defineEmits(['update:currentPost', 'update:currentReply'])
 
 const { public: env } = useRuntimeConfig()
 const createTime = useLocaleTimeAgo(props.data.date)
+
+const isPreviewVisible = ref(false)
 
 const isDisplayToolbar = computed(() => props.data.id === props.currentPost)
 function onToggleToolbar() {
@@ -54,11 +58,15 @@ function onToggleCommentReply(id: number | null) {
 <template>
   <article class="flex gap-3 pt-3">
     <img class="h-9 w-9 flex-shrink-0 rounded-md bg-white object-cover" :src="env.AVATAR" alt="avatar">
-    <main class="cursor-default overflow-hidden text-sm">
+    <main class="w-full cursor-default overflow-hidden text-sm">
       <span class="block pb-2 text-primary">{{ data.name }}</span>
       <p class="pb-3 text-gray-800">
         {{ data.content }}
       </p>
+      <button v-if="data.assets" @click="isPreviewVisible = true">
+        TestPreview
+      </button>
+      <ImagePreview v-if="data.assets" v-model:visible="isPreviewVisible" :images="data.assets" />
       <div class="flex flex-col gap-1">
         <!-- 地址 -->
         <address v-if="data.address" class="text-xs text-primary not-italic">

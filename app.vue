@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import '@unocss/reset/tailwind-compat.css'
 import Layout from '@/components/Layout/Layout.vue'
 
 const { public: env } = useRuntimeConfig()

@@ -8,7 +8,7 @@ const { y } = useWindowScroll() // 获取滚动距离
 
 // 顶部透明度和图标颜色
 const navClass = computed(() => {
-  return y.value > 250 ? 'bg-opacity-100 text-neutral-400' : 'bg-opacity-0 text-white'
+  return y.value > 250 ? 'backdrop-blur text-neutral-400' : 'text-white'
 })
 </script>
 
@@ -18,7 +18,7 @@ const navClass = computed(() => {
     class="relative h-[300px] w-full bg-neutral-400 bg-cover bg-center bg-no-repeat"
   >
     <!-- 按钮 -->
-    <div :class="navClass" class="fixed top-0 z-10 w-full bg-neutral-100 transition-duration-300 md:w-xl">
+    <div :class="navClass" class="fixed top-0 z-10 w-full transition-all transition-duration-500 md:w-xl">
       <div class="flex items-center justify-between text-xl">
         <div class="m-2 cursor-pointer rounded-lg p-2 hover:bg-black/5">
           <div class="i-icon-park-solid:user" />

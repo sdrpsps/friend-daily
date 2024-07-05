@@ -2,6 +2,7 @@ import process from 'node:process'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  css: ['@unocss/reset/tailwind-compat.css'],
   app: {
     head: {
       charset: 'utf-8',
