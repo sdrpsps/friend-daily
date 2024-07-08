@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Divider from '../Common/Divider.vue'
 import HeightTransition from '../Common/HeightTransition.vue'
+import ImageGrid from '../Common/ImageGrid.vue'
 import ImagePreview from '../Common/ImagePreview.vue'
 import Comment from './Comment.vue'
 import Like from './Like.vue'
@@ -27,7 +28,12 @@ const emit = defineEmits(['update:currentPost', 'update:currentReply'])
 const { public: env } = useRuntimeConfig()
 const createTime = useLocaleTimeAgo(props.data.date)
 
+const initImageIndex = ref<number | null>(null)
 const isPreviewVisible = ref(false)
+function onClickImage(index: number) {
+  initImageIndex.value = index
+  isPreviewVisible.value = true
+}
 
 const isDisplayToolbar = computed(() => props.data.id === props.currentPost)
 function onToggleToolbar() {
@@ -63,11 +69,10 @@ function onToggleCommentReply(id: number | null) {
       <p class="pb-3 text-gray-800">
         {{ data.content }}
       </p>
-      <button v-if="data.assets" @click="isPreviewVisible = true">
-        TestPreview
-      </button>
-      <ImagePreview v-if="data.assets" v-model:visible="isPreviewVisible" :images="data.assets" />
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-2">
+        <!-- 图片 -->
+        <ImageGrid v-if="data.assets" :images="data.assets" @image-click="onClickImage" />
+        <ImagePreview v-if="data.assets" v-model:visible="isPreviewVisible" :images="data.assets" :index="initImageIndex" />
         <!-- 地址 -->
         <address v-if="data.address" class="text-xs text-primary not-italic">
           {{ data.address }}

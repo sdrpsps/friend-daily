@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 
-const props = defineProps<{ images: string[], visible: boolean }>()
+const props = defineProps<{ images: string[], visible: boolean, index: number | null }>()
 const emit = defineEmits(['update:visible'])
 
 const container = ref<HTMLElement | null>(null)
@@ -12,13 +12,7 @@ const startY = ref(0)
 const currentTranslateX = ref(0)
 const currentTranslateY = ref(0)
 const isDragging = ref(false)
-const zoomStates = ref(props.images.map(() => ({
-  scale: 1,
-  translateX: 0,
-  translateY: 0,
-  isZoomed: false,
-  loaded: false,
-})))
+const zoomStates = ref(props.images.map(() => ({ scale: 1, translateX: 0, translateY: 0, isZoomed: false, loaded: false })))
 const isZoomed = computed(() => zoomStates.value.some(zoomState => zoomState.isZoomed))
 
 const lastClickTime = ref(0)
@@ -134,16 +128,22 @@ function closePopup() {
 }
 
 watch(currentIndex, (newIndex) => {
-  if (!isZoomed.value) {
-    translateX.value = -newIndex * (container.value?.clientWidth ?? 0)
-  }
+  nextTick(() => {
+    if (!isZoomed.value) {
+      translateX.value = -newIndex * (container.value?.clientWidth ?? 0)
+    }
+  })
 })
 
 watch(() => props.visible, (newVal) => {
-  if (newVal)
+  if (newVal) {
+    currentIndex.value = props.index ?? 0
     document.addEventListener('keydown', onKeydown)
-  else
+  }
+  else {
+    zoomStates.value = zoomStates.value.map(item => ({ ...item, translateX: 0, translateY: 0, scale: 1, isZoomed: false }))
     document.removeEventListener('keydown', onKeydown)
+  }
 })
 </script>
 

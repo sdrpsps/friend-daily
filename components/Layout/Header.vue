@@ -18,16 +18,18 @@ const navClass = computed(() => {
     class="relative h-[300px] w-full bg-neutral-400 bg-cover bg-center bg-no-repeat"
   >
     <!-- 按钮 -->
-    <div :class="navClass" class="fixed top-0 z-10 w-full transition-all transition-duration-500 md:w-xl">
-      <div class="flex items-center justify-between text-xl">
-        <div class="m-2 cursor-pointer rounded-lg p-2 hover:bg-black/5">
-          <div class="i-icon-park-solid:user" />
-        </div>
-        <div class="m-2 cursor-pointer rounded-lg p-2 hover:bg-black/5">
-          <div class="i-icon-park-solid:remind" />
+    <ClientOnly>
+      <div :class="navClass" class="fixed top-0 z-10 w-full transition-all transition-duration-500 md:w-xl">
+        <div class="flex items-center justify-between text-xl">
+          <div class="m-2 cursor-pointer rounded-lg p-2 hover:bg-black/5">
+            <div class="i-icon-park-solid:user" />
+          </div>
+          <div class="m-2 cursor-pointer rounded-lg p-2 hover:bg-black/5">
+            <div class="i-icon-park-solid:remind" />
+          </div>
         </div>
       </div>
-    </div>
+    </ClientOnly>
     <!-- 头像与 slogan -->
     <div class="absolute right-6 top-64 flex flex-col select-none items-end">
       <div class="flex">
