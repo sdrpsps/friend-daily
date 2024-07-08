@@ -1,10 +1,14 @@
 # Friend-Daily
 
-H5 朋友圈
+H5 朋友圈，磨洋工中
 
 ## 目标
 
 复刻 [https://kam.space](https://kam.space)
+
+## 演示
+
+[点这里](https://bytespark.me)
 
 ## 如何启动？
 
