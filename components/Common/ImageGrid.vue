@@ -36,7 +36,7 @@ function onClickImage(index: number) {
 <template>
   <div class="grid gap-2" :class="gridClass">
     <div v-for="(image, index) in images" :key="image" class="aspect-square cursor-zoom-in overflow-hidden rounded" @click="onClickImage(index)">
-      <img :src="image" :alt="`Displaying image ${image}`" class="h-full w-full object-cover">
+      <img :src="image" :alt="`Displaying image ${image}`" loading="lazy" class="h-full w-full object-cover">
     </div>
   </div>
 </template>

@@ -33,7 +33,7 @@ const navClass = computed(() => {
     <!-- 头像与 slogan -->
     <div class="absolute right-6 top-64 flex flex-col select-none items-end">
       <div class="flex">
-        <span class="mr-4 mt-3 text-white font-medium">{{ env.TITLE }}</span>
+        <span class="mr-4 mt-3 text-white font-medium">{{ env.USERNAME }}</span>
         <img class="h-15 w-15 rounded-md bg-white object-cover" :src="env.AVATAR" alt="avatar">
       </div>
       <span class="mt-2 text-xs text-neutral-300">{{ env.DESCRIPTION }}</span>

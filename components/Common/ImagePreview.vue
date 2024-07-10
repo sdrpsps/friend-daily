@@ -172,14 +172,14 @@ watch(() => props.visible, (newVal) => {
               :style="{ transform: `translateX(${translateX}px)` }"
             >
               <div
-                v-for="(image, index) in images"
+                v-for="(image, i) in images"
                 :key="`i-${image}`"
                 class="h-full w-full flex flex-shrink-0 justify-center"
-                :class="{ 'transition-all duration-500 ease-in-out': !isDragging, 'opacity-0': (index !== currentIndex) && isZoomed }"
-                :style="{ transform: `translateX(${zoomStates[index].translateX}px) translateY(${zoomStates[index].translateY}px) scale(${zoomStates[index].scale})` }"
+                :class="{ 'transition-all duration-500 ease-in-out': !isDragging, 'opacity-0': (i !== currentIndex) && isZoomed }"
+                :style="{ transform: `translateX(${zoomStates[i].translateX}px) translateY(${zoomStates[i].translateY}px) scale(${zoomStates[i].scale})` }"
               >
-                <div v-if="!zoomStates[index].loaded" class="i-eos-icons:loading h-12 w-12" />
-                <img v-show="zoomStates[index].loaded" :src="image" alt="Image" class="select-none" @load="zoomStates[index].loaded = true">
+                <div v-if="!zoomStates[i].loaded" class="i-eos-icons:loading h-12 w-12" />
+                <img v-show="zoomStates[i].loaded" :src="image" alt="Image" loading="lazy" class="select-none" @load="zoomStates[i].loaded = true">
               </div>
             </div>
           </div>

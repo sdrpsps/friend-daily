@@ -22,7 +22,7 @@ docker run -d --name friend-daily \
 -e NUXT_PUBLIC_DESCRIPTION="默认描述" \
 -e NUXT_PUBLIC_EMAIL="xx@xx.com" \
 -e NUXT_PUBLIC_BANNER_IMAGE="https://imgapi.cn/bing.php" \
--e NUXT_PUBLIC_AVATAR="./avatar.webp" \
+-e NUXT_PUBLIC_AVATAR="https://imgapi.cn/api.php?fl=fengjing" \
 -p 3000:3000 \
 sdrpsps/friend-daily
 ```

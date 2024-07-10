@@ -7,26 +7,18 @@ import Comment from './Comment.vue'
 import Like from './Like.vue'
 import Reply from './Reply.vue'
 import ToolBar from './ToolBar.vue'
+import type { Post } from '~/types/post'
 
 const props = defineProps<{
   currentPost: number | null
   currentReply: number | null
-  data: {
-    id: number
-    name: string
-    content: string
-    date: string
-    address: string
-    likes?: { id: number, name: string }[]
-    comments?: { id: number, name: string, content: string, website?: string, parentId?: number }[]
-    assets?: string[]
-  }
+  data: Post
 }>()
 
 const emit = defineEmits(['update:currentPost', 'update:currentReply'])
 
 const { public: env } = useRuntimeConfig()
-const createTime = useLocaleTimeAgo(props.data.date)
+const createTime = useLocaleTimeAgo(props.data.createdAt)
 
 const initImageIndex = ref<number | null>(null)
 const isPreviewVisible = ref(false)
@@ -65,7 +57,7 @@ function onToggleCommentReply(id: number | null) {
   <article class="flex gap-3 pt-3">
     <img class="h-9 w-9 flex-shrink-0 rounded-md bg-white object-cover" :src="env.AVATAR" alt="avatar">
     <main class="w-full cursor-default overflow-hidden text-sm">
-      <span class="block pb-2 text-primary">{{ data.name }}</span>
+      <span class="block pb-2 text-primary">{{ env.USERNAME }}</span>
       <p class="pb-3 text-gray-800">
         {{ data.content }}
       </p>
@@ -83,7 +75,7 @@ function onToggleCommentReply(id: number | null) {
           <button class="rounded bg-bgc px-1 text-primary" @click.stop="onToggleToolbar">
             <div class="i-ri:more-fill text-xl" />
           </button>
-          <ToolBar :visible="isDisplayToolbar" :data="data" @hide="onHideToolbar" @reply="onToggleReply" />
+          <ToolBar :visible="isDisplayToolbar" @hide="onHideToolbar" @reply="onToggleReply" />
         </div>
         <!-- 回复表单 -->
         <HeightTransition>
@@ -91,7 +83,7 @@ function onToggleCommentReply(id: number | null) {
         </HeightTransition>
         <!-- 评论区 -->
         <div v-if="isDisplayFooter" class="overflow-hidden rounded bg-bgc">
-          <Like v-if="hasLike" :reply="data.likes" />
+          <Like v-if="hasLike" :like="data.likes" />
           <div v-if="hasComment" class="flex flex-col gap-1 pb-2 text-primary">
             <Divider />
             <Comment v-for="item in data.comments" :key="item.id" :comment="item" @click.stop="onToggleCommentReply(item.id)">

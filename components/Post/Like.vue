@@ -1,21 +1,15 @@
 <script setup lang="ts">
-defineProps<{
-  reply?: { id: number, name: string }[]
-}>()
-/* const postItem = inject<PostItem>('postItem')!
+const props = defineProps<{ like: string[] }>()
 
-const userList = computed(() => postItem.likes.filter(item => item.name !== '访客').map(item => item.name).join('，'))
-// 计算点赞列表中 name 为访客的数量
-const visitorCount = computed(() => postItem.likes.filter(item => item.name === '访客').length)
-const visitorText = computed(() => visitorCount.value > 0 ? `${visitorCount.value} 个访客` : '') */
+const userList = computed(() => props.like.filter(item => item !== '访客').join('，'))
+const visitorCount = computed(() => props.like.reduce((acc, item) => item === '访客' ? acc + 1 : acc, 0))
 </script>
 
 <template>
   <div class="w-full flex px-2 py-2 text-primary">
     <div class="i-icon-park-outline:like mt-[1px] flex-none text-lg" />
-    <div class="pl-3 text-sm">
-      {{ `${reply?.map(item => item.name).join('，')}` }}
-      <!-- {{ `${userList}${userList.length > 0 ? '，' : ''}${visitorText}` }} -->
+    <div class="select-none pl-3 text-sm">
+      {{ `${userList}${visitorCount > 0 ? `，${visitorCount}个访客` : ''}` }}
     </div>
   </div>
 </template>

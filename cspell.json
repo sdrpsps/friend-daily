@@ -1,0 +1,27 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "build",
+    "out",
+    "output",
+    "prisma",
+    "pnpm-lock.yaml"
+  ],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "antfu",
+    "autosize",
+    "commitlint",
+    "iconify",
+    "nuxt",
+    "preinstall",
+    "sdrpsps",
+    "unocss",
+    "vueuse"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

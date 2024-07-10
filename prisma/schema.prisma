@@ -1,6 +1,7 @@
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -9,39 +10,77 @@ generator client {
 
 model User {
   id        Int       @id @default(autoincrement())
-  username  String    @unique
-  avatarUrl String?
+  name      String    @unique
+  email     String?   @unique
+  avatar    String?
+  website   String?
   posts     Post[]
   likes     Like[]
   comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  @@index([name])
 }
 
 model Post {
   id        Int       @id @default(autoincrement())
-  content   String
-  imageUrl  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  Int
+  content   String    @db.Text
+  address   String?
+  assets    Asset[]
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
   comments  Comment[]
   likes     Like[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  @@index([userId])
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  content   String
-  createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id])
+  id        Int       @id @default(autoincrement())
+  content   String    @db.Text
+  post      Post      @relation(fields: [postId], references: [id])
   postId    Int
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  parentId  Int?
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  @@index([postId])
+  @@index([userId])
 }
 
 model Like {
-  id     Int  @id @default(autoincrement())
-  post   Post @relation(fields: [postId], references: [id])
-  postId Int
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+  id        Int       @id @default(autoincrement())
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  @@index([postId])
+  @@index([userId])
+  @@index([postId, userId])
+}
+
+model Asset {
+  id        Int       @id @default(autoincrement())
+  url       String
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  @@index([postId])
 }

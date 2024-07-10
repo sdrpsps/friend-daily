@@ -1,8 +1,5 @@
 <script setup lang="ts">
-defineProps<{
-  visible: boolean
-  data: { id: number, name: string, content: string, date: string, address: string }
-}>()
+defineProps<{ visible: boolean }>()
 
 const emit = defineEmits(['hide', 'reply'])
 
