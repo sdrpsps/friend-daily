@@ -9,11 +9,15 @@ COPY package.json .
 
 # 安装 pnpm
 RUN npm install -g pnpm
+
 # 安装项目依赖
 RUN pnpm install
 
 # 复制所有文件到工作目录
 COPY . .
+
+# 初始化 prisma 客户端
+RUN npx prisma generate
 
 # 构建项目
 RUN pnpm build
