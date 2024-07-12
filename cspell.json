@@ -15,6 +15,7 @@
     "antfu",
     "autosize",
     "commitlint",
+    "corepack",
     "iconify",
     "nuxt",
     "preinstall",

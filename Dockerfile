@@ -1,38 +1,25 @@
-# 使用 Node.js 18 的 Alpine 版本作为构建镜像
 FROM node:18-alpine AS builder
 
-# 设置工作目录
+ENV PNPM_HOME="/pnpm"
+
+ENV PATH="$PNPM_HOME:$PATH"
+
+RUN corepack enable
+
+COPY . /app
+
 WORKDIR /app
 
-# 复制 package.json 文件到工作目录
-COPY package.json .
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 
-# 安装 pnpm
-RUN npm install -g pnpm
+RUN pnpm run build
 
-# 安装项目依赖
-RUN pnpm install
-
-# 复制所有文件到工作目录
-COPY . .
-
-# 初始化 prisma 客户端
-RUN npx prisma generate
-
-# 构建项目
-RUN pnpm build
-
-# 使用 Node.js 18 的 Alpine 版本作为生产镜像
 FROM node:18-alpine AS production
 
-# 设置工作目录
 WORKDIR /app
 
-# 复制构建后的文件到生产镜像
 COPY --from=builder /app/.output /app
 
-# 暴露端口
 EXPOSE 3000
 
-# 运行容器时的命令
 CMD ["node", "./server/index.mjs"]

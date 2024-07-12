@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "friend-daily",
   "type": "module",
   "private": true,
   "scripts": {
@@ -7,15 +7,14 @@
     "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "preinstall": "npx only-allow pnpm",
-    "postinstall": "nuxt prepare && npx simple-git-hooks",
+    "postinstall": "nuxt prepare && prisma generate && simple-git-hooks",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "spellcheck": "cspell ."
   },
   "dependencies": {
     "@github/textarea-autosize": "^0.3.3",
-    "@prisma/client": "5.15.1",
+    "@prisma/client": "^5.16.2",
     "@unocss/reset": "^0.61.0",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
@@ -34,7 +33,7 @@
     "@unocss/preset-uno": "^0.61.0",
     "@unocss/transformer-directives": "^0.61.0",
     "cspell": "^8.10.4",
-    "eslint": "9.4.0",
+    "eslint": "^9.4.0",
     "lint-staged": "^15.2.7",
     "prisma": "^5.15.1",
     "simple-git-hooks": "^2.11.1",

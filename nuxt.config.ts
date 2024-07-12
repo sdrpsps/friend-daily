@@ -20,4 +20,5 @@ export default defineNuxtConfig({
       AVATAR: process.env.NUXT_PUBLIC_AVATAR || './avatar.webp',
     },
   },
+  compatibilityDate: '2024-04-03',
 })
