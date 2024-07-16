@@ -5,9 +5,7 @@ import Header from './Header.vue'
 <template>
   <div class="min-h-screen w-full bg-white md:w-xl">
     <Header />
-    <section class="px-5 pt-12">
-      <NuxtPage />
-    </section>
+    <NuxtPage />
   </div>
 </template>
 

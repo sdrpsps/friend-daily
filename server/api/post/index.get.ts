@@ -73,6 +73,7 @@ export default defineEventHandler(async (event): Promise<GetPostsResponse> => {
     return {
       data,
       total,
+      success: true,
     }
   }
   catch (e) {

@@ -18,6 +18,7 @@
     "corepack",
     "iconify",
     "nuxt",
+    "pinia",
     "preinstall",
     "sdrpsps",
     "unocss",

@@ -1,6 +1,7 @@
 export interface GetPostsResponse {
   data: Post[]
   total: number
+  success: boolean
 }
 
 export interface Post {

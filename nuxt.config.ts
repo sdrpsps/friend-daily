@@ -9,7 +9,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no',
     },
   },
-  modules: ['@unocss/nuxt', '@vueuse/nuxt'],
+  modules: ['@unocss/nuxt', '@vueuse/nuxt', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
       TITLE: process.env.NUXT_PUBLIC_TITLE || '默认标题',

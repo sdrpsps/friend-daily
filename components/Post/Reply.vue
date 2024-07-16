@@ -1,79 +1,124 @@
 <script setup lang="ts">
 import autosize from '@github/textarea-autosize'
 import { nextTick, onMounted, ref } from 'vue'
+import type { PostCommentResponse } from '@/types/comment'
 
-defineProps<{
+const props = defineProps<{
   postId: number
-  commentId?: number
-  replyName?: string
+  parentId?: number
+  parentName?: string
 }>()
 
-const emit = defineEmits(['hide'])
+const emit = defineEmits(['hide', 'updateComment'])
+
+const { onUpdatePostComment } = useWebsiteStore()
+
+const textareaRef = ref<HTMLTextAreaElement | null>(null)
+
+const comment = ref<Record<string, string | number>>({
+  content: '',
+  name: '',
+  email: '',
+  website: '',
+})
+
 function onHide() {
   emit('hide')
 }
 
-const textareaRef = ref<HTMLElement | null>(null)
-
-// 表单字段
-const fields = ref([
-  { name: 'content', type: 'text', value: '', maxlength: 140, required: true, placeholder: '内容 *' },
-  {
-    name: 'name',
-    type: 'text',
-    value: '',
-    maxlength: 32,
-    required: true,
-    placeholder: '昵称 *',
-    pattern: '^[a-zA-Z\\u4E00-\\u9FA5][a-zA-Z0-9\\u4E00-\\u9FA5\\-·]*[a-zA-Z0-9\\u4E00-\\u9FA5]?$',
-  },
-  { name: 'email', type: 'email', value: '', maxlength: 70, required: true, placeholder: '邮箱 *' },
-  { name: 'website', type: 'url', value: '', maxlength: 70, required: false, placeholder: '网站' },
-])
-
 function onAutoSizeTextarea() {
-  nextTick(() => autosize(textareaRef.value as HTMLTextAreaElement))
+  nextTick(() => {
+    if (textareaRef.value) {
+      autosize(textareaRef.value)
+    }
+  })
 }
 
-// 提交
+function generateBody() {
+  const body = { ...comment.value }
+
+  Object.keys(body).forEach((key) => {
+    if (body[key] === '') {
+      delete body[key]
+    }
+  })
+
+  if (props.parentId) {
+    body.parentId = props.parentId
+  }
+
+  return body
+}
+
 async function onSubmit(e: Event) {
   e.preventDefault()
+
+  const { data, success } = await $fetch<PostCommentResponse>(`/api/comment/${props.postId}`, {
+    method: 'POST',
+    body: generateBody(),
+  })
+
+  if (success) {
+    onHide()
+    onUpdatePostComment(props.postId)
+    const user = useLocalStorage('user', { name: '', email: '', website: '' })
+    user.value = data
+  }
 }
 
-// 挂载时使 textarea 高度自适应
 onMounted(() => {
   onAutoSizeTextarea()
+  const user = useLocalStorage('user', { name: '', email: '', website: '' })
+
+  if (!user.value)
+    return
+  comment.value.name = user.value.name
+  comment.value.email = user.value.email
+  comment.value.website = user.value.website
 })
 </script>
 
 <template>
-  <div class="mt-1 overflow-auto border b-primaryGreen rounded">
-    <form v-click-outside="onHide" class="rounded bg-white p-2" @submit="onSubmit">
+  <div v-click-outside="onHide" class="mt-1 overflow-auto border b-primaryGreen rounded" @click.stop>
+    <form class="rounded bg-white p-2" @submit="onSubmit">
       <textarea
         ref="textareaRef"
-        v-model="fields[0].value"
+        v-model="comment.content"
         class="w-full resize-none b-none outline-none"
-        :placeholder="`${replyName ? `回复${replyName}:` : '评论'}`"
-        :maxlength="fields[0].maxlength"
-        :required="fields[0].required"
+        :placeholder="`${props.parentName ? `回复${props.parentName}:` : '评论'}`"
+        maxlength="140"
+        required
       />
-      <div class="flex items-start justify-between">
+      <div class="mt-2 flex items-start justify-between">
         <div class="bg-bg w-2/3 flex flex-col rounded py-2">
           <input
-            v-for="field in fields.slice(1)"
-            :key="field.name"
-            v-model="field.value"
-            class="border-b bg-transparent pt-1 outline-none first:pt-0"
-            :name="field.name"
-            :type="field.type"
-            :maxlength="field.maxlength"
-            :placeholder="field.placeholder"
-            :required="field.required"
-            :pattern="field?.pattern"
+            v-model="comment.name"
+            class="border-b bg-transparent pt-1 outline-none"
+            name="name"
+            type="text"
+            maxlength="32"
+            placeholder="昵称 *"
+            required
+            pattern="^[a-zA-Z\\u4E00-\\u9FA5][a-zA-Z0-9\\u4E00-\\u9FA5\\-·]*[a-zA-Z0-9\\u4E00-\\u9FA5]?$"
+          >
+          <input
+            v-model="comment.email"
+            class="border-b bg-transparent pt-1 outline-none"
+            name="email"
+            type="email"
+            placeholder="邮箱 *"
+            required
+          >
+          <input
+            v-model="comment.website"
+            class="border-b bg-transparent pt-1 outline-none"
+            name="website"
+            type="url"
+            placeholder="网站"
           >
         </div>
         <button class="rounded bg-primaryGreen px-5 py-1 text-white">
-          {{ replyName ? '回复' : '评论' }}
+          {{ props.parentName ? '回复' : '评论' }}
         </button>
       </div>
     </form>

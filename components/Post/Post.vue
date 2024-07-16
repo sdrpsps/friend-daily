@@ -9,16 +9,12 @@ import Reply from './Reply.vue'
 import ToolBar from './ToolBar.vue'
 import type { Post } from '~/types/post'
 
-const props = defineProps<{
-  currentPost: number | null
-  currentReply: number | null
-  data: Post
-}>()
-
-const emit = defineEmits(['update:currentPost', 'update:currentReply'])
+const props = defineProps<{ data: Post }>()
 
 const { public: env } = useRuntimeConfig()
 const createTime = useLocaleTimeAgo(props.data.createdAt)
+
+const { currentPostId, currentReplyId } = storeToRefs(useWebsiteStore())
 
 const initImageIndex = ref<number | null>(null)
 const isPreviewVisible = ref(false)
@@ -27,20 +23,14 @@ function onClickImage(index: number) {
   isPreviewVisible.value = true
 }
 
-const isDisplayToolbar = computed(() => props.data.id === props.currentPost)
-function onToggleToolbar() {
-  emit('update:currentPost', props.data.id)
-}
-function onHideToolbar() {
-  emit('update:currentPost', null)
+const isDisplayToolbar = computed(() => props.data.id === currentPostId.value)
+function onToggleToolbar(id: number | null) {
+  currentPostId.value = id
 }
 
-const isDisplayReply = computed(() => props.data.id === props.currentReply)
-function onToggleReply() {
-  emit('update:currentReply', props.data.id)
-}
-function onHideReply() {
-  emit('update:currentReply', null)
+const isDisplayReply = computed(() => props.data.id === currentReplyId.value)
+function onToggleReply(id: number | null) {
+  currentReplyId.value = id
 }
 
 const hasLike = computed(() => props.data.likes && props.data.likes.length > 0)
@@ -72,14 +62,14 @@ function onToggleCommentReply(id: number | null) {
         <!-- 时间和工具栏 -->
         <div class="relative flex items-center justify-between">
           <time class="text-xs text-gray-400">{{ createTime }}</time>
-          <button class="rounded bg-bgc px-1 text-primary" @click.stop="onToggleToolbar">
+          <button class="rounded bg-bgc px-1 text-primary" @click.stop="onToggleToolbar(data.id)">
             <div class="i-ri:more-fill text-xl" />
           </button>
-          <ToolBar :visible="isDisplayToolbar" @hide="onHideToolbar" @reply="onToggleReply" />
+          <ToolBar :visible="isDisplayToolbar" @hide="onToggleToolbar(null)" @reply="onToggleReply(data.id)" />
         </div>
         <!-- 回复表单 -->
         <HeightTransition>
-          <Reply v-if="isDisplayReply" :post-id="data.id" @hide="onHideReply" />
+          <Reply v-if="isDisplayReply" :post-id="data.id" @hide="onToggleReply(null)" />
         </HeightTransition>
         <!-- 评论区 -->
         <div v-if="isDisplayFooter" class="overflow-hidden rounded bg-bgc">
@@ -90,8 +80,8 @@ function onToggleCommentReply(id: number | null) {
               <Reply
                 v-if="currentCommentReply === item.id"
                 :post-id="data.id"
-                :comment-id="item.id"
-                :reply-name="item.name"
+                :parent-id="item.id"
+                :parent-name="item.name"
                 @hide="onToggleCommentReply(null)"
               />
             </Comment>
