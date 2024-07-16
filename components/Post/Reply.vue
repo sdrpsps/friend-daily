@@ -61,17 +61,18 @@ async function onSubmit(e: Event) {
   if (success) {
     onHide()
     onUpdatePostComment(props.postId)
-    const user = useLocalStorage('user', { name: '', email: '', website: '' })
+    const user = useUser()
     user.value = data
   }
 }
 
 onMounted(() => {
   onAutoSizeTextarea()
-  const user = useLocalStorage('user', { name: '', email: '', website: '' })
+  const user = useUser()
 
-  if (!user.value)
+  if (!user.value || user.value.name === '访客') {
     return
+  }
   comment.value.name = user.value.name
   comment.value.email = user.value.email
   comment.value.website = user.value.website

@@ -1,15 +1,41 @@
 <script setup lang="ts">
-defineProps<{ visible: boolean }>()
+const props = defineProps<{ visible: boolean, postId: number, like: string[] }>()
 
 const emit = defineEmits(['hide', 'reply'])
+
+const { onUpdatePostLike } = useWebsiteStore()
 
 function onHide() {
   emit('hide')
 }
 
-const isLike = ref(false)
-function onLike() {
-  isLike.value = !isLike.value
+const user = useUser()
+const isGuest = computed(() => user.value.id === 2)
+const isLike = isGuest.value ? ref(false) : computed(() => props.like.includes(user.value.name))
+
+async function onLike() {
+  if (isLike.value) {
+    await $fetch(`/api/like/${props.postId}`, {
+      method: 'DELETE',
+      body: {
+        userId: user.value.id,
+      },
+    })
+  }
+  else {
+    await $fetch(`/api/like/${props.postId}`, {
+      method: 'POST',
+      body: {
+        userId: user.value.id,
+      },
+    })
+  }
+
+  onUpdatePostLike(props.postId)
+  if (isGuest.value) {
+    (isLike as Ref<boolean>).value = !(isLike as Ref<boolean>).value
+  }
+
   setTimeout(() => {
     emit('hide')
   }, 500)

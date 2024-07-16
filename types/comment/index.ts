@@ -1,6 +1,6 @@
 export interface PostCommentResponse {
   data: {
-    userId: number
+    id: number
     name: string
     email: string
     website: string

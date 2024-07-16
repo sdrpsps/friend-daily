@@ -34,6 +34,14 @@ export const useWebsiteStore = defineStore('websiteStore', () => {
     }
   }
 
+  async function onUpdatePostLike(postId: number) {
+    const { data } = await $fetch(`/api/like/post/${postId}`)
+    const post = postList.value.find(item => item.id === postId)
+    if (post) {
+      post.likes = data
+    }
+  }
+
   return {
     postList: skipHydrate(postList),
     pageNum,
@@ -45,5 +53,6 @@ export const useWebsiteStore = defineStore('websiteStore', () => {
     onSearch,
     onLoadMore,
     onUpdatePostComment,
+    onUpdatePostLike,
   }
 })

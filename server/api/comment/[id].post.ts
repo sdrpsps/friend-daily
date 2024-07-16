@@ -58,7 +58,7 @@ export default defineEventHandler(async (event): Promise<PostCommentResponse> =>
     return {
       success: true,
       data: {
-        userId: user.id,
+        id: user.id,
         name: user.name,
         email: user.email ? user.email : '',
         website: user.website ? user.website : '',

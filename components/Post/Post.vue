@@ -65,7 +65,7 @@ function onToggleCommentReply(id: number | null) {
           <button class="rounded bg-bgc px-1 text-primary" @click.stop="onToggleToolbar(data.id)">
             <div class="i-ri:more-fill text-xl" />
           </button>
-          <ToolBar :visible="isDisplayToolbar" @hide="onToggleToolbar(null)" @reply="onToggleReply(data.id)" />
+          <ToolBar :visible="isDisplayToolbar" :post-id="data.id" :like="data.likes" @hide="onToggleToolbar(null)" @reply="onToggleReply(data.id)" />
         </div>
         <!-- 回复表单 -->
         <HeightTransition>
