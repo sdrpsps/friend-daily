@@ -11,6 +11,15 @@ export default defineNuxtConfig({
   },
   modules: ['@unocss/nuxt', '@vueuse/nuxt', '@pinia/nuxt'],
   runtimeConfig: {
+    s3: {
+      ACCESS_KEY_ID: process.env.NUXT_S3_ACCESS_KEY_ID || '',
+      SECRET_ACCESS_KEY: process.env.NUXT_S3_SECRET_ACCESS_KEY || '',
+      REGION: process.env.NUXT_S3_REGION || '',
+      ENDPOINT_URL: process.env.NUXT_S3_ENDPOINT_URL || '',
+      BUCKET_NAME: process.env.NUXT_S3_BUCKET_NAME || '',
+      UPLOAD_KEY: process.env.NUXT_S3_UPLOAD_KEY || '',
+      FILE_PREFIX_URL: process.env.NUXT_S3_FILE_PREFIX_URL || '',
+    },
     public: {
       TITLE: process.env.NUXT_PUBLIC_TITLE || '默认标题',
       USERNAME: process.env.NUXT_PUBLIC_USERNAME || '默认用户名',
